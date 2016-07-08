@@ -1,0 +1,110 @@
+﻿@{
+    ViewBag.Title = "Прогноз погоди";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-header">
+    <h2>Погода в @(ViewBag.City)</h2>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <form class="form-inline" role="form">
+                <div class="form-horizontal">
+                    <div class="dropdown">
+                        <label for="dropdownMenu">Оберіть </label>
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Місто
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                            <li>@Html.ActionLink("Київ", "Index", "Weather", new { @City = "Kyiv" }, null)</li>
+                            <li>@Html.ActionLink("Львів", "Index", "Weather", new { @City = "Lviv" }, null)</li>
+                            <li>@Html.ActionLink("Харків", "Index", "Weather", new { @City = "Kharkiv" }, null)</li>
+                            <li>@Html.ActionLink("Дніпро", "Index", "Weather", new { @City = "Dnipropetrovsk" }, null)</li>
+                            <li>@Html.ActionLink("Одеса", "Index", "Weather", new { @City = "Odessa" }, null)</li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-10">
+            <form class="form-inline" role="form" action="@Url.Action("Index", "Weather")" method="GET">
+                <label for="txtCity">або введіть свій варіант:</label>
+                <input type="text" class="form-control" name="city" id="city" placeholder="Назва міста">
+                <button type="submit" class="btn btn-primary">Обрати</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br />
+<div class="container">
+    <div class="container text-center">
+        <div class="nav nav-pills">
+            <button type="button" class="btn btn-default">@Html.ActionLink("На сьогодні", "Index", "Weather", new { @City = ViewBag.City, @take = 1, @daysNumber = "1 день" }, null)</button>
+            <button type="button" class="btn btn-default">@Html.ActionLink("На 3 дня", "Index", "Weather", new { @City = ViewBag.City, @take = 3, @daysNumber = "3 дня" }, null)</button>
+            <button type="button" class="btn btn-default">@Html.ActionLink("На 7 днів", "Index", "Weather", new { @City = ViewBag.City, @take = 7, @daysNumber = "7 днів" }, null) </button>
+        </div>
+        <br />
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Погода в @(ViewBag.City) на @(ViewBag.Days)</h3>
+            </div>
+            @foreach (var wForecast in ViewBag.Weather)
+            {
+                <div class="panel-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="~/Images/@(wForecast.Weather[0].Icon).png" />
+                                <br />
+                                <h4><span class="label label-info">@wForecast.Weather[0].Description</span></h4>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img src="~/Images/Thermometer.png" title="Температура повітря" />@wForecast.Temp.Day &deg;C
+                                    </div>
+                                    <div class="col-md-4">
+                                        <img src="~/Images/Atmospheric Pressure.png" title="Атмосферний тиск" />@wForecast.Pressure гПа
+                                    </div>
+                                    <div class="col-md-4">
+                                        <img src="~/Images/Dew Point.png" title="Вологість повітря" />@wForecast.Humidity %
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-left">
+                                <h4>Ранок <span class="label label-info">@wForecast.Temp.Morn &deg;C </span></h4>
+                                <h4>День <span class="label label-info">@wForecast.Temp.Day &deg;C </span></h4>
+                                <h4>Вечір <span class="label label-info">@wForecast.Temp.Eve &deg;C </span></h4>
+                                <h4>Ніч <span class="label label-info">@wForecast.Temp.Night &deg;C </span></h4>
+                            </div>
+                            <div class="col-md-2">
+                                <p>Максимальна температура:<img src="~/Images/Temperature max.png" title="Максимальна температура" />@wForecast.Temp.Max &deg;C</p>
+                                <p>Мінімальна температура:<img src="~/Images/Temperature min.png" title="Мінімальна температура" />@wForecast.Temp.Min &deg;C</p>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <p>Швидкість вітру:<img src="~/Images/Wind Gauge.png" title="Швидкість вітру" /><br />@wForecast.Speed м/с</p>
+                            </div>
+                            <div class="col-md-1 text-center">
+                                <p>Хмарність:<img src="~/Images/Clouds.png" title="Хмарність" /><br />@wForecast.Clouds %</p>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <p>Кількість опадів:<img src="~/Images/Drops.png" title="Кількість опадів" /><br />@wForecast.Rain мм</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+            }
+            <div class="panel-footer text-left">
+                Останнє оновлення: <span class="label label-success">@DateTime.Now</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
