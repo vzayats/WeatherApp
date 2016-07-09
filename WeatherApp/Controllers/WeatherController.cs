@@ -11,7 +11,7 @@ namespace WeatherApp.Controllers
 
         //GET: /Weather/Index
         [HttpGet]
-        public ActionResult Index(string city = "Kyiv", int take = 1, string daysNumber = "1 день")
+        public ActionResult Index(string city = "Kyiv", int take = 1, string daysNumber = "Сьогодні")
         {
             if (ModelState.IsValid && city != string.Empty)
             {

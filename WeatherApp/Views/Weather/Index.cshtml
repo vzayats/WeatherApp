@@ -40,8 +40,8 @@
 <div class="container">
     <div class="container text-center">
         <div class="nav nav-pills">
-            <button type="button" class="btn btn-default">@Html.ActionLink("На сьогодні", "Index", "Weather", new { @City = ViewBag.City, @take = 1, @daysNumber = "1 день" }, null)</button>
-            <button type="button" class="btn btn-default">@Html.ActionLink("На 3 дня", "Index", "Weather", new { @City = ViewBag.City, @take = 3, @daysNumber = "3 дня" }, null)</button>
+            <button type="button" class="btn btn-default">@Html.ActionLink("На сьогодні", "Index", "Weather", new { @City = ViewBag.City, @take = 1, @daysNumber = "Сьогодні" }, null)</button>
+            <button type="button" class="btn btn-default">@Html.ActionLink("На 3 дні", "Index", "Weather", new { @City = ViewBag.City, @take = 3, @daysNumber = "3 дні" }, null)</button>
             <button type="button" class="btn btn-default">@Html.ActionLink("На 7 днів", "Index", "Weather", new { @City = ViewBag.City, @take = 7, @daysNumber = "7 днів" }, null) </button>
         </div>
         <br />
@@ -53,6 +53,29 @@
             {
                 <div class="panel-body">
                     <div class="container">
+                        <div class="col-md-12">
+                            @{  var fromUnixTimestamp = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+                                fromUnixTimestamp = fromUnixTimestamp.AddSeconds(wForecast.Dt).ToLocalTime();
+                                var newDate = fromUnixTimestamp.ToString("D");
+                                if (fromUnixTimestamp.Date.Date == DateTime.Now.Date)
+                                {
+                                    <h3><span class="label label-primary">Сьогодні</span></h3>
+                                }
+                                if (fromUnixTimestamp.Date.Date == DateTime.Now.Date.AddDays(1))
+                                {
+                                    <h3><span class="label label-primary">Завтра</span></h3>
+                                }
+                                if (fromUnixTimestamp.Date.Date == DateTime.Now.Date.AddDays(2))
+                                {
+                                    <h3><span class="label label-primary">Післязавтра, @newDate</span></h3>
+                                }
+                                else
+                                {
+                                    <h3><span class="label label-primary">@newDate</span></h3>
+                                }
+                            }
+                        </div>
+                        <br />
                         <div class="row">
                             <div class="col-md-3">
                                 <img src="~/Images/@(wForecast.Weather[0].Icon).png" />
@@ -94,17 +117,10 @@
                     </div>
                     <hr />
                 </div>
-            }
+                                }
             <div class="panel-footer text-left">
                 Останнє оновлення: <span class="label label-success">@DateTime.Now</span>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
