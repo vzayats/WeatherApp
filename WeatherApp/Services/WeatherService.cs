@@ -5,7 +5,7 @@ using System.Net;
 
 namespace WeatherApp.Services
 {
-    public class WeatherService
+    public class WeatherService : IWeatherService
     {
         private string apiCall;
 

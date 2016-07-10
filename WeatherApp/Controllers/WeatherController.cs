@@ -2,12 +2,18 @@
 using System.Linq;
 using System.Web.Mvc;
 using WeatherApp.Models;
+using WeatherApp.Services;
 
 namespace WeatherApp.Controllers
 {
     public class WeatherController : Controller
     {
-        private Services.WeatherService wService;
+        IWeatherService _wService;
+
+        public WeatherController(IWeatherService weatherService)
+        {
+            _wService = weatherService;
+        }
 
         public string ApiRequest { get; private set; }
 
@@ -17,8 +23,8 @@ namespace WeatherApp.Controllers
         {
             if (ModelState.IsValid && city != string.Empty)
             {
-                wService = new Services.WeatherService(ApiRequest);
-                var wForecast = wService.GetWeatherForecast<WeatherObject>(city);
+                _wService = new WeatherService(ApiRequest);
+                var wForecast = _wService.GetWeatherForecast<WeatherObject>(city);
                 ViewBag.City = String.Format("{0}, {1}", wForecast.City.Name, wForecast.City.Country);
                 //Кількість днів для відображення
                 ViewBag.Weather = wForecast.List.Take(take);
