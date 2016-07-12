@@ -14,12 +14,12 @@ namespace WeatherApp.Services
             this.apiCall = apiCall;
         }
 
-        public Temperature GetWeatherForecast<Temperature>(string city)
+        public Temperature GetWeatherForecast<Temperature>(string city, int numberOfLines)
         {
             //Open Weather Map API key
             string ApiId = System.Configuration.ConfigurationManager.AppSettings["APIKey"];
             //Open Weather Map API call
-            string ApiRequest = String.Format("http://api.openweathermap.org/data/2.5/forecast/daily?q={0}&units=metric&APPID={1}&lang=ua", city, ApiId);
+            string ApiRequest = String.Format("http://api.openweathermap.org/data/2.5/forecast/daily?q={0}&units=metric&APPID={1}&lang=ua&cnt={2}", city, ApiId, numberOfLines);
             {
                 var request = (HttpWebRequest)WebRequest.Create(ApiRequest);
                 using (var response = (HttpWebResponse)request.GetResponse())

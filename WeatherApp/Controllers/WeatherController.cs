@@ -19,15 +19,14 @@ namespace WeatherApp.Controllers
 
         //GET: /Weather/Index
         [HttpGet]
-        public ActionResult Index(string city = "Kyiv", int take = 1, string daysNumber = "Сьогодні")
+        public ActionResult Index(string city = "Kiev", int numberOfLines = 1, string daysNumber = "Сьогодні")
         {
             if (ModelState.IsValid && city != string.Empty)
             {
                 _wService = new WeatherService(ApiRequest);
-                var wForecast = _wService.GetWeatherForecast<WeatherObject>(city);
+                var wForecast = _wService.GetWeatherForecast<WeatherObject>(city, numberOfLines);
                 ViewBag.City = String.Format("{0}, {1}", wForecast.City.Name, wForecast.City.Country);
-                //Кількість днів для відображення
-                ViewBag.Weather = wForecast.List.Take(take);
+                ViewBag.Weather = wForecast.List;
                 ViewBag.Days = daysNumber;
             }
             
