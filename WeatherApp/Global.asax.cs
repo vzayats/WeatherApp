@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Data.Entity;
+using WeatherApp.Models.Context;
 
 namespace WeatherApp
 {
@@ -12,6 +14,8 @@ namespace WeatherApp
     {
         protected void Application_Start()
         {
+            Database.SetInitializer(new WeatherDbInitializer());
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

@@ -4,6 +4,9 @@
 }
 <div class="page-header">
     <h2>Погода в @(ViewBag.City)</h2>
+    <div class="container text-left">
+        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-map-marker"></span>@Html.ActionLink("Обрані міста", "Index", "City")</button>
+    </div>
 </div>
 <div class="container">
     <div class="row">

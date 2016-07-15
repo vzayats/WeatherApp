@@ -23,7 +23,6 @@ namespace WeatherApp.Controllers
         {
             if (ModelState.IsValid && city != string.Empty)
             {
-                _wService = new WeatherService(ApiRequest);
                 var wForecast = _wService.GetWeatherForecast<WeatherObject>(city, numberOfLines);
                 ViewBag.City = String.Format("{0}, {1}", wForecast.City.Name, wForecast.City.Country);
                 ViewBag.Weather = wForecast.List;

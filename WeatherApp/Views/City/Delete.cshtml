@@ -1,0 +1,27 @@
+﻿@model WeatherApp.Models.SelectedCity
+@{
+    ViewBag.Title = "Видалення міста";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-header">
+    <h2>Видалення міста <u>@Html.DisplayFor(model => model.Name)</u> з списку</h2>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <p>Ви дійсно бажаєте видалити місто <span class="label label-default">@Html.DisplayFor(model => model.Name)</span> з списку?</p>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-actions no-color">
+                    <input type="submit" value="Видалити" class="btn btn-danger glyphicon-trash" />
+                </div>
+            }
+        </div>
+    </div>
+    <hr />
+    <div>
+        <button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-arrow-left">@Html.ActionLink(" Назад", "Index")</span></button>
+    </div>
+</div>
+
