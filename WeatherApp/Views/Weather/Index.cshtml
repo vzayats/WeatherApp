@@ -14,17 +14,18 @@
             <form class="form-inline" role="form">
                 <div class="form-horizontal">
                     <div class="dropdown">
-                        <label for="dropdownMenu">Оберіть </label>
+                        <label>Оберіть </label>
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             Місто
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                            <li>@Html.ActionLink("Київ", "Index", "Weather", new { @City = "Kiev" }, null)</li>
-                            <li>@Html.ActionLink("Львів", "Index", "Weather", new { @City = "Lviv" }, null)</li>
-                            <li>@Html.ActionLink("Харків", "Index", "Weather", new { @City = "Kharkiv" }, null)</li>
-                            <li>@Html.ActionLink("Дніпро", "Index", "Weather", new { @City = "Dnipropetrovsk" }, null)</li>
-                            <li>@Html.ActionLink("Одеса", "Index", "Weather", new { @City = "Odessa" }, null)</li>
+                            @foreach (WeatherApp.Models.SelectedCity b in ViewBag.Cities)
+                            {
+                                <li>
+                                    @Html.ActionLink(b.Name, "Index", "Weather", new { city = b.Name }, null)
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
@@ -32,7 +33,7 @@
         </div>
         <div class="col-md-10">
             <form class="form-inline" role="form" action="@Url.Action("Index", "Weather")" method="GET">
-                <label for="txtCity">або введіть свій варіант:</label>
+                <label>або введіть свій варіант:</label>
                 <input type="text" class="form-control" name="city" id="city" placeholder="Назва міста">
                 <button type="submit" class="btn btn-primary">Обрати</button>
             </form>
@@ -43,9 +44,9 @@
 <div class="container">
     <div class="container text-center">
         <div class="nav nav-pills">
-            <button type="button" class="btn btn-default">@Html.ActionLink("На сьогодні", "Index", "Weather", new { @City = ViewBag.City, @numberOfLines = 1, @daysNumber = "Сьогодні" }, null)</button>
-            <button type="button" class="btn btn-default">@Html.ActionLink("На 3 дні", "Index", "Weather", new { @City = ViewBag.City, @numberOfLines = 3, @daysNumber = "3 дні" }, null)</button>
-            <button type="button" class="btn btn-default">@Html.ActionLink("На 7 днів", "Index", "Weather", new { @City = ViewBag.City, @numberOfLines = 7, @daysNumber = "7 днів" }, null) </button>
+            <button type="button" class="btn btn-default">@Html.ActionLink("На сьогодні", "Index", "Weather", new {ViewBag.City, @numberOfLines = 1, @daysNumber = "Сьогодні" }, null)</button>
+            <button type="button" class="btn btn-default">@Html.ActionLink("На 3 дні", "Index", "Weather", new {ViewBag.City, @numberOfLines = 3, @daysNumber = "3 дні" }, null)</button>
+            <button type="button" class="btn btn-default">@Html.ActionLink("На 7 днів", "Index", "Weather", new {ViewBag.City, @numberOfLines = 7, @daysNumber = "7 днів" }, null) </button>
         </div>
         <br />
         <div class="panel panel-default">

@@ -7,13 +7,6 @@ namespace WeatherApp.Services
 {
     public class WeatherService : IWeatherService
     {
-        private string apiCall;
-
-        public WeatherService(string apiCall)
-        {
-            this.apiCall = apiCall;
-        }
-
         public Temperature GetWeatherForecast<Temperature>(string city, int numberOfLines)
         {
             //Open Weather Map API key
