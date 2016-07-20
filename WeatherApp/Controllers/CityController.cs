@@ -12,9 +12,17 @@ namespace WeatherApp.Controllers
         private WeatherContext db = new WeatherContext();
 
         // GET: City
-        public ActionResult Index()
+        public ActionResult Index(string search)
         {
-            return View(db.SelectedCities.ToList());
+            var city = from c in db.SelectedCities
+                       select c;
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                city = city.Where(c => c.Name.Contains(search.Trim()));
+            }
+
+            return View(city.ToList());
         }
 
         // GET: City/Create

@@ -12,6 +12,18 @@
     </div>
 </div>
 <br />
+<div class="container">
+    <form class="form-inline" role="form">
+        <div class="form-horizontal">
+            @using (Html.BeginForm())
+            {
+                @Html.TextBox("search", "", new { @class = "form-control", placeholder = "Назва міста" })
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Пошук</button>
+            }
+        </div>
+    </form>
+</div>
+<br />
 <div class="table col-md-7">
     <table class="table table-hover table-striped">
         <tr>
@@ -24,8 +36,8 @@
             {
             <tr>
                 <td class="col-md-3">@b.Name</td>
-                <td class="col-md-1"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>@Html.ActionLink(" Редагувати", "Edit", new { id = @b.CityId })</button></td>
-                <td class="col-md-1"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>@Html.ActionLink(" Видалити", "Delete", new { id = @b.CityId })</button></td>
+                <td class="col-md-1"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>@Html.ActionLink(" Редагувати", "Edit", new { id = b.CityId })</button></td>
+                <td class="col-md-1"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>@Html.ActionLink(" Видалити", "Delete", new { id = b.CityId })</button></td>
                 <td class="col-md-7"></td>
             </tr>
         }

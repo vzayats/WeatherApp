@@ -1,5 +1,8 @@
 ﻿@{
-    ViewBag.Title = "Прогноз погоди";
+    string pageTitle = "Прогноз погоди в " + ViewBag.City;
+}
+@{
+    ViewBag.Title = pageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="page-header">
@@ -44,9 +47,9 @@
 <div class="container">
     <div class="container text-center">
         <div class="nav nav-pills">
-            <button type="button" class="btn btn-default">@Html.ActionLink("На сьогодні", "Index", "Weather", new {ViewBag.City, @numberOfLines = 1, @daysNumber = "Сьогодні" }, null)</button>
-            <button type="button" class="btn btn-default">@Html.ActionLink("На 3 дні", "Index", "Weather", new {ViewBag.City, @numberOfLines = 3, @daysNumber = "3 дні" }, null)</button>
-            <button type="button" class="btn btn-default">@Html.ActionLink("На 7 днів", "Index", "Weather", new {ViewBag.City, @numberOfLines = 7, @daysNumber = "7 днів" }, null) </button>
+            <button type="button" class="btn btn-default">@Html.ActionLink("На сьогодні", "Index", "Weather", new { ViewBag.City, numberOfLines = 1, daysNumber = "Сьогодні" }, null)</button>
+            <button type="button" class="btn btn-default">@Html.ActionLink("На 3 дні", "Index", "Weather", new { ViewBag.City, numberOfLines = 3, daysNumber = "3 дні" }, null)</button>
+            <button type="button" class="btn btn-default">@Html.ActionLink("На 7 днів", "Index", "Weather", new { ViewBag.City, numberOfLines = 7, daysNumber = "7 днів" }, null) </button>
         </div>
         <br />
         <div class="panel panel-default">
