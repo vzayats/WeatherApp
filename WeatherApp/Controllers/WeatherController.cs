@@ -13,7 +13,7 @@ namespace WeatherApp.Controllers
         public WeatherController(IWeatherService weatherService)
         {
             _wService = weatherService;
-            _weatherHistoryService = new WeatherHistoryService(this);
+            _weatherHistoryService = new WeatherHistoryService();
         }
 
         public readonly WeatherContext Db = new WeatherContext();
