@@ -29,7 +29,7 @@
             <th class="text-center">Хмарність, %</th>
             <th class="text-center">Кількість опадів, мм</th>
         </tr>
-        @foreach (var b in Model)
+        @foreach (var b in Model.GroupBy(m => m.CityHistory).Select(g => g.First()))
         {
             <tr>
                 <td class="text-center">@b.CityHistory.CityName</td>
