@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WeatherApp.Models.HistoryModels
 {
     public class WeatherHistory
     {
-        [Key]
+        [Key, Column(Order = 1)]
         public int WeatherId { get; set; }
         public int Date { get; set; }
         public string Description { get; set; }

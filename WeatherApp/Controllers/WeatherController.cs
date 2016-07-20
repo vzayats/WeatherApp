@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using WeatherApp.Models;
 using WeatherApp.Models.Context;
-using WeatherApp.Models.HistoryModels;
 using WeatherApp.Services;
 
 namespace WeatherApp.Controllers
@@ -29,7 +27,7 @@ namespace WeatherApp.Controllers
             if (ModelState.IsValid && city != string.Empty)
             {
                 var wForecast = _wService.GetWeatherForecast<WeatherObject>(city, numberOfLines);
-                ViewBag.City = String.Format("{0}, {1}", wForecast.City.Name, wForecast.City.Country);
+                ViewBag.City = $"{wForecast.City.Name}, {wForecast.City.Country}";
                 ViewBag.Weather = wForecast.List;
                 ViewBag.Days = daysNumber;
                 ViewBag.Cities = Db.SelectedCities.ToList();

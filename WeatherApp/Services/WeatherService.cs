@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.IO;
-using System.Net;
+using System.Net.Http;
 
 namespace WeatherApp.Services
 {
@@ -10,17 +8,17 @@ namespace WeatherApp.Services
         public Temperature GetWeatherForecast<Temperature>(string city, int numberOfLines)
         {
             //Open Weather Map API key
-            string ApiId = System.Configuration.ConfigurationManager.AppSettings["APIKey"];
+            string apiId = System.Configuration.ConfigurationManager.AppSettings["APIKey"];
             //Open Weather Map API call
-            string ApiRequest = String.Format("http://api.openweathermap.org/data/2.5/forecast/daily?q={0}&units=metric&APPID={1}&lang=ua&cnt={2}", city, ApiId, numberOfLines);
+            string apiRequest =
+                $"http://api.openweathermap.org/data/2.5/forecast/daily?q={city}&units=metric&APPID={apiId}&lang=ua&cnt={numberOfLines}";
+
+            using (HttpClient client = new HttpClient())
+            using (HttpResponseMessage response = client.GetAsync(apiRequest).Result)
+            using (HttpContent content = response.Content)
             {
-                var request = (HttpWebRequest)WebRequest.Create(ApiRequest);
-                using (var response = (HttpWebResponse)request.GetResponse())
-                {
-                    var reader = new StreamReader(response.GetResponseStream());
-                    var responseText = reader.ReadToEnd();
-                    return JsonConvert.DeserializeObject<Temperature>(responseText);
-                }
+                string result = content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<Temperature>(result);
             }
         }
     }

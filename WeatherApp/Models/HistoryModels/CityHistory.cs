@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WeatherApp.Models.HistoryModels
 {
     public class CityHistory
     {
-        [Key]
+        [Key, Column(Order = 1)]
         public int CityId { get; set; }
         public int Id { get; set; }
         public string CityName { get; set; }
