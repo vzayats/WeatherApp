@@ -38,7 +38,6 @@ namespace WeatherApp.Controllers
             }
             return View();
         }
-
         protected override void Dispose(bool disposing)
         {
             _db.Dispose();
