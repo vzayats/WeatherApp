@@ -18,8 +18,6 @@ namespace WeatherApp.Controllers
         }
 
         private readonly WeatherContext _db = new WeatherContext();
-        
-        public string ApiRequest { get; private set; }
 
         //GET: /Weather/Index
         [HttpGet]

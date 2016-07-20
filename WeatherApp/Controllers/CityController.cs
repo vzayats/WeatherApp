@@ -9,7 +9,7 @@ namespace WeatherApp.Controllers
 {
     public class CityController : Controller
     {
-        WeatherContext db = new WeatherContext();
+        private WeatherContext db = new WeatherContext();
 
         // GET: City
         public ActionResult Index()

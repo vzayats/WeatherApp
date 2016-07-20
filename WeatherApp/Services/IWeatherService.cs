@@ -2,6 +2,6 @@
 {
     public interface IWeatherService
     {
-        Temperature GetWeatherForecast<Temperature>(string city, int numberOfLines);
+        TEmperature GetWeatherForecast<TEmperature>(string city, int numberOfLines);
     }
 }

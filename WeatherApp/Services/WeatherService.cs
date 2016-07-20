@@ -5,7 +5,7 @@ namespace WeatherApp.Services
 {
     public class WeatherService : IWeatherService
     {
-        public Temperature GetWeatherForecast<Temperature>(string city, int numberOfLines)
+        public TEmperature GetWeatherForecast<TEmperature>(string city, int numberOfLines)
         {
             //Open Weather Map API key
             string apiId = System.Configuration.ConfigurationManager.AppSettings["APIKey"];
@@ -18,7 +18,7 @@ namespace WeatherApp.Services
             using (HttpContent content = response.Content)
             {
                 string result = content.ReadAsStringAsync().Result;
-                return JsonConvert.DeserializeObject<Temperature>(result);
+                return JsonConvert.DeserializeObject<TEmperature>(result);
             }
         }
     }
