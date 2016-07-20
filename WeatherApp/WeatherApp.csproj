@@ -148,6 +148,7 @@
     <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\WeatherController.cs" />
+    <Compile Include="Services\IWeatherHistoryService.cs" />
     <Compile Include="Services\WeatherHistoryService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

@@ -31,6 +31,7 @@ namespace WeatherApp.Infrastructure
         private void AddBindings()
         {
             kernel.Bind<IWeatherService>().To<WeatherService>().WithConstructorArgument("apiCall", "apiCall");
+            kernel.Bind<IWeatherHistoryService>().To<WeatherHistoryService>();
         }
     }
 }

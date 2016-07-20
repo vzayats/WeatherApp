@@ -4,7 +4,7 @@ using WeatherApp.Models.HistoryModels;
 
 namespace WeatherApp.Services
 {
-    public class WeatherHistoryService
+    public class WeatherHistoryService : IWeatherHistoryService
     {
         public void SaveWeatherHistory(WeatherObject wForecast)
         {

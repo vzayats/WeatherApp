@@ -9,15 +9,16 @@ namespace WeatherApp.Controllers
     public class WeatherController : Controller
     {
         readonly IWeatherService _wService;
+        readonly IWeatherHistoryService _hService;
 
-        public WeatherController(IWeatherService weatherService)
+        public WeatherController(IWeatherService weatherService, IWeatherHistoryService historyService)
         {
             _wService = weatherService;
-            _weatherHistoryService = new WeatherHistoryService();
+            _hService = historyService;
         }
 
-        public readonly WeatherContext Db = new WeatherContext();
-        private readonly WeatherHistoryService _weatherHistoryService;
+        private readonly WeatherContext _db = new WeatherContext();
+        
         public string ApiRequest { get; private set; }
 
         //GET: /Weather/Index
@@ -30,19 +31,19 @@ namespace WeatherApp.Controllers
                 ViewBag.City = $"{wForecast.City.Name}, {wForecast.City.Country}";
                 ViewBag.Weather = wForecast.List;
                 ViewBag.Days = daysNumber;
-                ViewBag.Cities = Db.SelectedCities.ToList();
+                ViewBag.Cities = _db.SelectedCities.ToList();
 
                 if (wForecast.List != null)
                 {
-                    _weatherHistoryService.SaveWeatherHistory(wForecast);
-                    }
+                    _hService.SaveWeatherHistory(wForecast);
                 }
+            }
             return View();
         }
 
         protected override void Dispose(bool disposing)
         {
-            Db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
     }
