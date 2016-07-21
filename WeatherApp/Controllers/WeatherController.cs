@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
 using WeatherApp.Models;
 using WeatherApp.Models.Context;
@@ -30,6 +31,11 @@ namespace WeatherApp.Controllers
                 ViewBag.Weather = wForecast.List;
                 ViewBag.Days = daysNumber;
                 ViewBag.Cities = _db.SelectedCities.ToList();
+
+                //Coordinates for Google Maps
+                string coord =
+                    $"{wForecast.City.Coord.Lat.ToString(CultureInfo.InvariantCulture)},{wForecast.City.Coord.Lon.ToString(CultureInfo.InvariantCulture)}";
+                ViewBag.mapCoord = "https://www.google.com/maps/@" + coord + ",12.5z";
 
                 if (wForecast.List != null)
                 {

@@ -6,9 +6,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="page-header">
-    <h2>Погода в @(ViewBag.City)</h2>
+    <h2>Погода в @(ViewBag.City) <button type="button" class="btn btn-default" onclick="openMap()" title="Показати на картах Google"><span class="glyphicon glyphicon-map-marker"></span></button></h2>
     <div class="container text-left">
-        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-map-marker"></span>@Html.ActionLink("Обрані міста", "Index", "City")</button>
+        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-heart-empty"></span>@Html.ActionLink(" Обрані міста", "Index", "City")</button>
     </div>
 </div>
 <div class="container">
@@ -126,8 +126,16 @@
                 </div>
                                 }
             <div class="panel-footer text-left">
-                Останнє оновлення: <span class="label label-success">@DateTime.Now</span>
+                <span class="glyphicon glyphicon-time"></span> Останнє оновлення: <span class="label label-success">@DateTime.Now</span>
             </div>
         </div>
     </div>
 </div>
+@section scripts{
+    @*Open city on the map in a new tab*@
+    <script type="text/javascript">
+        function openMap() {
+            window.open("@ViewBag.mapCoord");
+        }
+    </script>
+}
