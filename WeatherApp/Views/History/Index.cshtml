@@ -1,4 +1,5 @@
 ﻿@model PagedList.IPagedList<WeatherApp.Models.HistoryModels.HistoryViewModel>
+@using System.Globalization
 @using PagedList.Mvc
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
@@ -50,7 +51,7 @@
                     @{
                         var fromUnixTimestamp = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
                         fromUnixTimestamp = fromUnixTimestamp.AddSeconds(b.WeatherHistory.Date).ToLocalTime();
-                        var newDate = fromUnixTimestamp.ToString();
+                        var newDate = fromUnixTimestamp.ToString(CultureInfo.InvariantCulture);
                     }
                     @newDate
                 </td>

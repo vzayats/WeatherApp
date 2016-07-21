@@ -1,5 +1,6 @@
-﻿using System.Globalization;
-using System.Linq;
+﻿using System.Data.Entity;
+using System.Globalization;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using WeatherApp.Models;
 using WeatherApp.Models.Context;
@@ -22,7 +23,7 @@ namespace WeatherApp.Controllers
 
         //GET: /Weather/Index
         [HttpGet]
-        public ActionResult Index(string city = "Kiev", int numberOfLines = 1, string daysNumber = "Сьогодні")
+        public async Task<ActionResult> Index(string city = "Kiev", int numberOfLines = 1, string daysNumber = "Сьогодні")
         {
             if (ModelState.IsValid && city != string.Empty)
             {
@@ -30,7 +31,7 @@ namespace WeatherApp.Controllers
                 ViewBag.City = $"{wForecast.City.Name}, {wForecast.City.Country}";
                 ViewBag.Weather = wForecast.List;
                 ViewBag.Days = daysNumber;
-                ViewBag.Cities = _db.SelectedCities.ToList();
+                ViewBag.Cities = await _db.SelectedCities.ToListAsync();
 
                 //Coordinates for Google Maps
                 string coord =

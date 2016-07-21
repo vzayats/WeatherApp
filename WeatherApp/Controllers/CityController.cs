@@ -1,8 +1,9 @@
 ﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using PagedList;
+using PagedList.EntityFramework;
 using WeatherApp.Models;
 using WeatherApp.Models.Context;
 
@@ -13,7 +14,7 @@ namespace WeatherApp.Controllers
         private WeatherContext db = new WeatherContext();
 
         // GET: City
-        public ActionResult Index(string search, string currentFilter, int? page)
+        public async Task<ActionResult> Index(string search, string currentFilter, int? page)
         {
             var city = from c in db.SelectedCities
                        orderby c.Name
@@ -38,7 +39,7 @@ namespace WeatherApp.Controllers
             const int pageSize = 5;
             int pageNumber = page ?? 1;
 
-            return View(city.ToPagedList(pageNumber, pageSize));
+            return View(await city.ToPagedListAsync(pageNumber, pageSize));
         }
 
         // GET: City/Create
@@ -51,12 +52,12 @@ namespace WeatherApp.Controllers
         // POST: City/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(SelectedCity selectedCity)
+        public async Task<ActionResult> Create(SelectedCity selectedCity)
         {
             if (ModelState.IsValid)
             {
                 db.SelectedCities.Add(selectedCity);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
@@ -65,14 +66,14 @@ namespace WeatherApp.Controllers
 
         // GET: City/Delete/1
         [HttpGet]
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            SelectedCity selectedCity = db.SelectedCities.Find(id);
+            SelectedCity selectedCity = await db.SelectedCities.FindAsync(id);
 
             if (selectedCity == null)
             {
@@ -84,9 +85,9 @@ namespace WeatherApp.Controllers
         // POST: City/Delete/1
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            SelectedCity selectedCity = db.SelectedCities.Find(id);
+            SelectedCity selectedCity = await db.SelectedCities.FindAsync(id);
 
             if (selectedCity == null)
             {
@@ -94,21 +95,21 @@ namespace WeatherApp.Controllers
             }
 
             db.SelectedCities.Remove(selectedCity);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             return RedirectToAction("Index");
         }
 
         // GET: City/Edit/1
         [HttpGet]
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            SelectedCity selectedCity = db.SelectedCities.Find(id);
+            SelectedCity selectedCity = await db.SelectedCities.FindAsync(id);
 
             if (selectedCity == null)
             {
@@ -120,12 +121,12 @@ namespace WeatherApp.Controllers
         // POST: City/Edit/1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(SelectedCity selectedCity)
+        public async Task<ActionResult> Edit(SelectedCity selectedCity)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(selectedCity).State = EntityState.Modified;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(selectedCity);
