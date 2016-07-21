@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using PagedList;
 using WeatherApp.Models;
 using WeatherApp.Models.Context;
 
@@ -12,17 +13,32 @@ namespace WeatherApp.Controllers
         private WeatherContext db = new WeatherContext();
 
         // GET: City
-        public ActionResult Index(string search)
+        public ActionResult Index(string search, string currentFilter, int? page)
         {
             var city = from c in db.SelectedCities
+                       orderby c.Name
                        select c;
 
             if (!string.IsNullOrWhiteSpace(search))
             {
-                city = city.Where(c => c.Name.Contains(search.Trim()));
+                city = (IOrderedQueryable<SelectedCity>)city.Where(c => c.Name.Contains(search.Trim()));
             }
 
-            return View(city.ToList());
+            //For PagedList
+            if (search != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                search = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = search;
+            const int pageSize = 5;
+            int pageNumber = page ?? 1;
+
+            return View(city.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: City/Create

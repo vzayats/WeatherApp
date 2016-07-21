@@ -1,4 +1,6 @@
-﻿@model IEnumerable<WeatherApp.Models.SelectedCity>
+﻿@model PagedList.IPagedList<WeatherApp.Models.SelectedCity>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "Обрані міста";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,9 +17,9 @@
 <div class="container">
     <form class="form-inline" role="form">
         <div class="form-horizontal">
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("Index", "City", FormMethod.Get))
             {
-                @Html.TextBox("search", "", new { @class = "form-control", placeholder = "Назва міста" })
+                @Html.TextBox("search", ViewBag.CurrentFilter as string, new { @class = "form-control", placeholder = "Назва міста" })
                 <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Пошук</button>
             }
         </div>
@@ -33,7 +35,7 @@
             <th></th>
         </tr>
         @foreach (WeatherApp.Models.SelectedCity b in Model)
-            {
+        {
             <tr>
                 <td class="col-md-3">@b.Name</td>
                 <td class="col-md-1"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>@Html.ActionLink(" Редагувати", "Edit", new { id = b.CityId })</button></td>
@@ -42,6 +44,9 @@
             </tr>
         }
     </table>
+    Сторінка @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) з @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 </div>
 <br />
 <div class="container">

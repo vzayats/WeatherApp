@@ -1,4 +1,6 @@
-﻿@model IEnumerable<WeatherApp.Models.HistoryModels.HistoryViewModel>
+﻿@model PagedList.IPagedList<WeatherApp.Models.HistoryModels.HistoryViewModel>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "Історія перегляду прогнозу погоди";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,7 +11,7 @@
 <div class="container">
     <form class="form-inline" role="form">
         <div class="form-horizontal">
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("Index", "History", FormMethod.Get))
             {
                 @Html.TextBox("search", "", new { @class = "form-control", placeholder = "Назва міста" })
                 <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Пошук</button>
@@ -21,9 +23,9 @@
 <div class="table col-md-12">
     <table class="table table-hover table-striped">
         <tr>
-            <th colspan="4" style="background-color:white"></th>
+            <th colspan="4" style="background-color: white"></th>
             <th colspan="4" class="text-center">Температура повітря &deg;C</th>
-            <th colspan="5" style="background-color:white"></th>
+            <th colspan="5" style="background-color: white"></th>
         </tr>
         <tr class="text-center">
             <th class="text-center">Місто</th>
@@ -46,28 +48,30 @@
                 <td class="text-center">@b.CityHistory.CityName</td>
                 <td class="text-center">
                     @{
-                    var fromUnixTimestamp = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-                    fromUnixTimestamp = fromUnixTimestamp.AddSeconds(b.WeatherHistory.Date).ToLocalTime();
-                    var newDate = fromUnixTimestamp.ToString();
-                }
-                @newDate
-            </td>
-            <td><img src="~/Images/@(b.WeatherHistory.WeatherIcon).png" height="60" width="60" /></td>
-            <td class="text-center">@b.WeatherHistory.Description</td>
-            <td class="text-center">@b.WeatherHistory.MorningTemp</td>
-            <td class="text-center">@b.WeatherHistory.DayTemp</td>
-            <td class="text-center">@b.WeatherHistory.EveningTemp</td>
-            <td class="text-center">@b.WeatherHistory.NightTemp</td>
-            <td class="text-center">@b.WeatherHistory.Pressure</td>
-            <td class="text-center">@b.WeatherHistory.Humidity</td>
-            <td class="text-center">@b.WeatherHistory.Speed</td>
-            <td class="text-center">@b.WeatherHistory.Clouds</td>
-            <td class="text-center">@b.WeatherHistory.Rain</td>
-        </tr>
+                        var fromUnixTimestamp = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                        fromUnixTimestamp = fromUnixTimestamp.AddSeconds(b.WeatherHistory.Date).ToLocalTime();
+                        var newDate = fromUnixTimestamp.ToString();
                     }
+                    @newDate
+                </td>
+                <td><img src="~/Images/@(b.WeatherHistory.WeatherIcon).png" height="60" width="60" /></td>
+                <td class="text-center">@b.WeatherHistory.Description</td>
+                <td class="text-center">@b.WeatherHistory.MorningTemp</td>
+                <td class="text-center">@b.WeatherHistory.DayTemp</td>
+                <td class="text-center">@b.WeatherHistory.EveningTemp</td>
+                <td class="text-center">@b.WeatherHistory.NightTemp</td>
+                <td class="text-center">@b.WeatherHistory.Pressure</td>
+                <td class="text-center">@b.WeatherHistory.Humidity</td>
+                <td class="text-center">@b.WeatherHistory.Speed</td>
+                <td class="text-center">@b.WeatherHistory.Clouds</td>
+                <td class="text-center">@b.WeatherHistory.Rain</td>
+            </tr>
+                        }
     </table>
+    Сторінка @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) з @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 </div>
-<br />
 <div class="container">
     <div class="row">
         <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-cloud"></span>@Html.ActionLink(" Погода", "Index", "Weather")</button>
