@@ -1,7 +1,9 @@
-﻿namespace WeatherApp.Services
+﻿using System.Threading.Tasks;
+
+namespace WeatherApp.Services
 {
     public interface IWeatherService
     {
-        TEmperature GetWeatherForecast<TEmperature>(string city, int numberOfLines);
+        Task<TEmperature> GetWeatherForecastAsync<TEmperature>(string city, int numberOfLines);
     }
 }

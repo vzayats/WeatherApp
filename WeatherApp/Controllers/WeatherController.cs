@@ -27,7 +27,7 @@ namespace WeatherApp.Controllers
         {
             if (ModelState.IsValid && city != string.Empty)
             {
-                var wForecast = _wService.GetWeatherForecast<WeatherObject>(city, numberOfLines);
+                var wForecast = await _wService.GetWeatherForecastAsync<WeatherObject>(city, numberOfLines);
                 ViewBag.City = $"{wForecast.City.Name}, {wForecast.City.Country}";
                 ViewBag.Weather = wForecast.List;
                 ViewBag.Days = daysNumber;
@@ -36,11 +36,11 @@ namespace WeatherApp.Controllers
                 //Coordinates for Google Maps
                 string coord =
                     $"{wForecast.City.Coord.Lat.ToString(CultureInfo.InvariantCulture)},{wForecast.City.Coord.Lon.ToString(CultureInfo.InvariantCulture)}";
-                ViewBag.mapCoord = "https://www.google.com/maps/@" + coord + ",12.5z";
+                ViewBag.mapCoord = "https://www.google.com/maps/@" + coord + ",12.7z";
 
                 if (wForecast.List != null)
                 {
-                    _hService.SaveWeatherHistory(wForecast);
+                    await _hService.SaveWeatherHistoryAsync(wForecast);
                 }
             }
             return View();

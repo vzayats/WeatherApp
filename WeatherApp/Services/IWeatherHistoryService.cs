@@ -1,9 +1,10 @@
+using System.Threading.Tasks;
 using WeatherApp.Models;
 
 namespace WeatherApp.Services
 {
     public interface IWeatherHistoryService
     {
-        void SaveWeatherHistory(WeatherObject wForecast);
+        Task SaveWeatherHistoryAsync(WeatherObject wForecast);
     }
 }
